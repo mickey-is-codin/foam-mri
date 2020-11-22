@@ -7,8 +7,8 @@ import { toJson$ } from './toJson';
 // Hard-code for now but eventually get from command-line args
 // Constants
 const FOAM_DIR = '/Users/mickey/Documents/personal/foam-notebook';
-const EXPORT_DIR = '/Users/mickey/Documents/programming/projects/foam-mri/packages/foam-export';
-const EXPORT_PATH = `${EXPORT_DIR}/export.json`
+const EXPORT_DIR = '/Users/mickey/Documents/programming/projects/foam-mri/packages/foam-mri/src/data';
+const EXPORT_PATH = `${EXPORT_DIR}/notesData.json`
 
 const final$ = of(FOAM_DIR).pipe(
   mergeMap(prefix => toListAllFiles$(prefix, '')),

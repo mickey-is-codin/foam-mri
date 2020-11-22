@@ -7,8 +7,7 @@ const renderCytoscape = () => {
   const cytoscapeContainer = document.getElementById('cy');
   const cytoscapeElements: any = [];
   const cytoscapeLayout = {
-    name: 'grid',
-    rows: 1
+    name: 'random',
   };
   cytoscape({
     container: cytoscapeContainer,
@@ -18,7 +17,11 @@ const renderCytoscape = () => {
   })
 };
 
-const NotesGraph = () => {
+const NotesGraph = (props: any) => {
+
+  const { notesData } = props;
+  console.log('notesData: ', notesData);
+
   useEffect(() => {
     renderCytoscape();
   });
