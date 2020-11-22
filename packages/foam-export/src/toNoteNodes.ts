@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { toSecond } from './fp';
-import { map, toArray } from 'rxjs/operators';
+import { map, toArray, tap } from 'rxjs/operators';
 import { readFile$ } from './rxjsFs';
 import { NoteNode } from './types';
 
@@ -20,9 +20,5 @@ const toNoteNodes = (path: fs.PathLike) => (contentBuffer: Buffer | string) : No
 }
 
 export const toNoteNodes$ = (path: fs.PathLike) => {
-  return readFile$(path).pipe(
-    map(toNoteNodes(path)),
-    toArray(),
-    // map (reduce array into a big object)
-  );
+  return readFile$(path).pipe(map(toNoteNodes(path)));
 };

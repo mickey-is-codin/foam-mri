@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { map, mergeMap, } from 'rxjs/operators';
+import { map, mergeMap, toArray } from 'rxjs/operators';
 import { toListAllFiles$ } from './toListAllFiles';
 import { toNoteNodes$ } from './toNoteNodes';
 import { toJson$ } from './toJson';
@@ -8,13 +8,15 @@ import { toJson$ } from './toJson';
 // Constants
 const FOAM_DIR = '/Users/mickey/Documents/personal/foam-notebook';
 const EXPORT_DIR = '/Users/mickey/Documents/programming/projects/foam-mri/packages/foam-export';
+const EXPORT_PATH = `${EXPORT_DIR}/export.json`
 
 const final$ = of(FOAM_DIR).pipe(
   mergeMap(prefix => toListAllFiles$(prefix, '')),
   map(path => `${FOAM_DIR}${path}`),
   mergeMap(toNoteNodes$),
-  mergeMap(toJson$(`${EXPORT_DIR}/export.json`))
+  toArray(),
+  mergeMap(toJson$(EXPORT_PATH))
 );
 
 console.log('Exporting your foam notebook...');
-final$.subscribe(console.log);
+final$.subscribe(() => console.log(`Notes saved to ${EXPORT_PATH}`));
