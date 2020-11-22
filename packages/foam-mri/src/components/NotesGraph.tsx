@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import cytoscape from 'cytoscape';
 import cyStyle from '../styles/cyStyle';
-import '../App.css';
 import { toCytoscapeStyle } from '../styles/cytoscapeStyle';
 
 const renderCytoscape = () => {
   const cytoscapeContainer = document.getElementById('cy');
-  console.log('container: ', cytoscapeContainer);
   const cytoscapeElements: any = [];
   const cytoscapeLayout = {
     name: 'grid',

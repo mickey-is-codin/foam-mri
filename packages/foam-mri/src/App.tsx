@@ -1,10 +1,10 @@
 import React from 'react';
-import * as cytoscape from 'cytoscape';
-import './App.css';
+import './styles/App.css';
+import NotesGraph from './components/NotesGraph';
 
 const App = () => {
   return (
-    <div>Smiley McGee</div>
+    <NotesGraph />
   );
 };
 
