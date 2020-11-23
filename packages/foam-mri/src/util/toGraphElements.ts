@@ -1,4 +1,5 @@
-import { identity } from "./fp";
+import { toNodes } from './toNodes';
+import { toEdges } from './toEdges';
 
 /*
 elements: [ // list of graph elements to start with
@@ -14,12 +15,9 @@ elements: [ // list of graph elements to start with
 ],
 */
 
-export const toGraphElements = (notesData: any) => {
+export const toGraphElements = (notesData: any) : any => {
   const entries = Object.entries(notesData);
-  // const elements = entries.reduce((elements, [notePath, note]) => {
-  const elements = entries.reduce((elements, curr) => {
-    console.log('curr: ', curr);
-    return elements;
-  }, []);
-  return elements;
+  const nodes = toNodes(entries);
+  const edges = toEdges(entries);
+  return [...nodes, ...edges];
 };

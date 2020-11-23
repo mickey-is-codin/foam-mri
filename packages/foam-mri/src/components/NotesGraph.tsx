@@ -4,7 +4,8 @@ import cyStyle from '../styles/cyStyle';
 import { toCytoscapeStyle } from '../styles/cytoscapeStyle';
 import { toGraphElements } from '../util/toGraphElements';
 
-const renderCytoscape = (elements: cytoscape.ElementsDefinition | cytoscape.ElementDefinition[]) => {
+const renderCytoscape = (elements: any) => {
+  console.log('elements: ', elements);
   const cytoscapeContainer = document.getElementById('cy');
   const cytoscapeLayout = {
     name: 'random',
