@@ -22,6 +22,7 @@ const NotesGraph = (props: any) => {
 
   const { notesData } = props;
   const graphElements = toGraphElements(notesData);
+  // const graphStyle = toGraphStyle(graphElements); // Style size of graph based on size?
 
   useEffect(() => {
     renderCytoscape(graphElements);

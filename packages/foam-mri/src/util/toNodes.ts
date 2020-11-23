@@ -1,8 +1,9 @@
 export const toNodes = (entries: any) => {
   return entries.reduce((nodes: any, [notePath]: any[]) => {
+    const [id] = notePath.split('.');
     const newNode = {
       data: {
-        id: notePath
+        id
       }
     };
     return [...nodes, newNode];
