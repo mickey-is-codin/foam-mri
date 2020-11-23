@@ -2,6 +2,7 @@ import { of } from 'rxjs';
 import { map, mergeMap, toArray } from 'rxjs/operators';
 import { toListAllFiles$ } from './util/toListAllFiles';
 import { toNoteNodes$ } from './util/toNoteNodes';
+import { toNoteNodesObject } from './util/toNoteNodesObject';
 import { toJson$ } from './util/toJson';
 
 // Hard-code for now but eventually get from command-line args
@@ -15,6 +16,7 @@ const final$ = of(FOAM_DIR).pipe(
   map(path => `${FOAM_DIR}${path}`),
   mergeMap(toNoteNodes$),
   toArray(),
+  map(toNoteNodesObject),
   mergeMap(toJson$(EXPORT_PATH))
 );
 
