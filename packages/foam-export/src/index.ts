@@ -1,8 +1,8 @@
 import { of } from 'rxjs';
 import { map, mergeMap, toArray } from 'rxjs/operators';
-import { toListAllFiles$ } from './toListAllFiles';
-import { toNoteNodes$ } from './toNoteNodes';
-import { toJson$ } from './toJson';
+import { toListAllFiles$ } from './util/toListAllFiles';
+import { toNoteNodes$ } from './util/toNoteNodes';
+import { toJson$ } from './util/toJson';
 
 // Hard-code for now but eventually get from command-line args
 // Constants
