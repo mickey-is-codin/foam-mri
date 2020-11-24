@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import cytoscape from 'cytoscape';
 import cyStyle from '../styles/cyStyle';
-import { toCytoscapeStyle } from '../styles/cytoscapeStyle';
+import { toBaseGraphStyle } from '../styles/cytoscapeStyle';
 import { toGraphElements } from '../util/toGraphElements';
 
 const renderCytoscape = (elements: any) => {
@@ -13,7 +13,7 @@ const renderCytoscape = (elements: any) => {
   cytoscape({
     container: cytoscapeContainer,
     elements,
-    style: toCytoscapeStyle(),
+    style: toBaseGraphStyle(),
     layout: cytoscapeLayout
   })
 };

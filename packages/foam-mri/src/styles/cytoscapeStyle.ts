@@ -1,20 +1,26 @@
-export const toCytoscapeStyle = () => {
+export const toBaseGraphStyle = () => {
   return [
     {
       selector: 'node',
       style: {
-        'background-color': '#666',
-        'label': 'data(id)'
+        'background-color': '#8b8b8b',
+        'label': 'data(id)',
+        'width': 10,
+        'height': 10,
       }
     },
     {
       selector: 'edge',
       style: {
         'width': 3,
-        'line-color': '#ccc',
-        'target-arrow-color': '#ccc',
-        'target-arrow-shape': 'triangle',
+        'line-color': '#5d5d5d',
         'curve-style': 'bezier'
+      }
+    },
+    {
+      selector: 'label',
+      style: {
+        'color': '#ffffff',
       }
     }
   ];

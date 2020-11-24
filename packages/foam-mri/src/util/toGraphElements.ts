@@ -1,19 +1,7 @@
 import { toNodes } from './toNodes';
 import { toEdges } from './toEdges';
 
-/*
-elements: [ // list of graph elements to start with
-  { // node a
-    data: { id: 'a' }
-  },
-  { // node b
-    data: { id: 'b' }
-  },
-  { // edge ab
-    data: { id: 'ab', source: 'a', target: 'b' }
-  }
-],
-*/
+// Someday add checks to this or export for non-working links
 
 export const toGraphElements = (notesData: any) : any => {
   const entries = Object.entries(notesData);
