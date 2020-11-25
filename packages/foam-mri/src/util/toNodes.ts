@@ -19,7 +19,7 @@
 export const toNodes = (entries: any) => {
   return entries.reduce((nodes: any, [notePath]: any[]) => {
     const [id] = notePath.split('.');
-    const searchHits: any = [];
+    const searchHits: any = [1, 2, 3];
     const newNode = {
       data: {
         id,

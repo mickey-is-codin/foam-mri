@@ -6,6 +6,6 @@ import { toEdges } from './toEdges';
 export const toGraphElements = (notesData: any) : any => {
   const entries = Object.entries(notesData);
   const nodes = toNodes(entries);
-  const edges = toEdges(entries);
+  const edges = toEdges(entries, nodes);
   return [...nodes, ...edges];
 };
