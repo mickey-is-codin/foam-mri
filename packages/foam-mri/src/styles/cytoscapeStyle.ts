@@ -1,3 +1,9 @@
+import { toHeatmapColors } from './colors';
+
+const HEATMAP_RESOLUTION = 10;
+const heatmapColors = toHeatmapColors(HEATMAP_RESOLUTION);
+console.log('heatmap colors: ', heatmapColors);
+
 export const toBaseGraphStyle = () => {
   return [
     {
