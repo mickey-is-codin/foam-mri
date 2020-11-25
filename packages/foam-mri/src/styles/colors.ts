@@ -1,9 +1,12 @@
-const RED_RGB: { [key: string]: any } = {
+import { Color } from '../util/types';
+
+const RED_RGB: Color = {
   r: 128,
   g: 0,
   b: 38,
 };
-const YELLOW_RGB: { [key: string]: any } = {
+
+const YELLOW_RGB: Color = {
   r: 255,
   g: 255,
   b: 204,
@@ -17,15 +20,17 @@ const toHex = (x: number) => {
 const rgbToHex = (r: number, g: number, b: number) => {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`
 };
-const toInterpolate = (color: string, t: number): any => RED_RGB[color] + (YELLOW_RGB[color] - RED_RGB[color]) * t;
 
-export const toHeatmapColors = (resolution: number) => {
+const toInterpolate = (startColor: Color, endColor: Color) => (color: string, t: number): any => startColor[color] + (endColor[color] - startColor[color]) * t;
+
+export const toHeatmapColors = (resolution: number, startColor: Color = RED_RGB, endColor: Color = YELLOW_RGB) => {
   const deltaT = 1.0 / resolution;
   const ts = Array.from({ length: resolution }, (_, ix) => deltaT * ix);
+  const interpolator = toInterpolate(startColor, endColor);
   const heatmapColors = ts.map((t) => {
-    const r = toInterpolate('r', t);
-    const g = toInterpolate('g', t);
-    const b = toInterpolate('b', t);
+    const r = interpolator('r', t);
+    const g = interpolator('g', t);
+    const b = interpolator('b', t);
     return rgbToHex(r,g,b);
   });
   return heatmapColors;
