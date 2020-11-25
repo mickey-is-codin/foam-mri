@@ -8,7 +8,6 @@ import { clipTo, intMean, allButLast } from '../util/fp';
 //   g: 255,
 //   b: 0,
 // };
-
 // const endColor: Color = {
 //   r: 0,
 //   g: 0,
@@ -17,7 +16,7 @@ import { clipTo, intMean, allButLast } from '../util/fp';
 
 const BASE_NODE_COLOR = '#8b8b8b';
 const BASE_EDGE_COLOR = '#5d5d5d';
-const HEATMAP_RESOLUTION = 3;
+const HEATMAP_RESOLUTION = 20;
 const toHeatmapRange = clipTo(HEATMAP_RESOLUTION);
 const heatmapColors = toHeatmapColors(HEATMAP_RESOLUTION);
 const nodeColors = [BASE_NODE_COLOR, ...heatmapColors];

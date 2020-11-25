@@ -4,3 +4,5 @@ export interface Color {
   g: number;
   b: number;
 };
+
+// Should use the same style above to create a type for the actual notesData
