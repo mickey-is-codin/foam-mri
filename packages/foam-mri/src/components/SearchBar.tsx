@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useKeyListener } from '../util/hooks';
 import { searchBarBackgroundStyle, searchBarStyle } from '../styles/searchBarStyle';
-import { SPACEBAR_CODE, ESCAPE_CODE, ENTER_CODE } from '../util/constants'; // do this as a map
+import { KEYCODES, SPACEBAR, ESCAPE, ENTER } from '../util/constants'; // do this as a map
 
 interface SearchBarProps {
   handleQuerySubmit: any;
@@ -16,20 +16,30 @@ const SearchBar = (props: SearchBarProps) => {
 
   const handleChange = ({ target: { value } }: any) => setSearchQuery(value);
 
-  const onKeyPress = useCallback((event) => {
-    if(event.keyCode === SPACEBAR_CODE) {
-      setSearchDisplayed(true);
-    }
-    if(setSearchDisplayed && (event.keyCode === ESCAPE_CODE)) {
-      setSearchQuery('');
-      setSearchDisplayed(false);
-    }
-    if(setSearchDisplayed && (event.keyCode === ENTER_CODE)) {
-      handleQuerySubmit(searchQuery);
-    }
-  }, [setSearchDisplayed, setSearchQuery, handleQuerySubmit, searchQuery]);
+  const spacePred = (event: any): boolean => !searchDisplayed && (event.keyCode === KEYCODES[SPACEBAR]);
+  const escapePred = (event: any): boolean => searchDisplayed && (event.keyCode === KEYCODES[ESCAPE]);
+  const enterPred = (event: any): boolean => searchDisplayed && (event.keyCode === KEYCODES[ENTER]);
 
-  useKeyListener(onKeyPress);
+  const spaceAction = (): void => {
+    setSearchDisplayed(true);
+  };
+  const escapeAction = (): void => {
+    setSearchQuery('');
+    setSearchDisplayed(false);
+  };
+  const enterAction = (): void => {
+    setSearchQuery('');
+    setSearchDisplayed(false);
+    handleQuerySubmit(searchQuery);
+  };
+
+  const predActionList = [
+    [spacePred, spaceAction],
+    [escapePred, escapeAction],
+    [enterPred, enterAction],
+  ];
+
+  useKeyListener(predActionList);
 
   return searchDisplayed ? (
     <>

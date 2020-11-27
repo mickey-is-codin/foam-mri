@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
+import { toTrue, noop, second } from '../util/fp';
 import cytoscape from 'cytoscape';
 import { toBaseGraphStyle } from '../styles/cytoscapeStyle';
 
@@ -36,7 +37,12 @@ export const useCytoscape = (graphElements: any) => {
   });
 };
 
-export const useKeyListener = (onKeyPress: any) => {
+export const useKeyListener = (predActionList: any) => {
+  const onKeyPress = useCallback((event) => {
+    const predAction = predActionList.find(([pred]: any) => pred(event)) || [toTrue, noop];
+    second(predAction)();
+  }, [predActionList]);
+
   useEffect(() => {
     document.addEventListener("keydown", onKeyPress, false);
     return () => {

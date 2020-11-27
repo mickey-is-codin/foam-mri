@@ -6,3 +6,7 @@ export const sum = (xs: number[]) => xs.reduce((a,b) => a + b, 0);
 export const mean = (xs: number[]) => sum(xs) / xs.length;
 export const intMean = (...xs: number[]) => Math.round((sum(xs) / xs.length));
 export const allButLast = (xs: any[]) => xs.slice(0,-1);
+
+export const toTrue = (x?: any): boolean => true;
+export const noop = (x?: any): void => {};
+export const second = ([x, y]: any[]) => y;

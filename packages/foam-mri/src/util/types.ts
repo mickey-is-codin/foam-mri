@@ -5,6 +5,10 @@ export interface Color {
   b: number;
 };
 
+export interface KeyCodesMap {
+  [key: string]: number;
+};
+
 export interface Note {
   path: string;
   links: string[];
