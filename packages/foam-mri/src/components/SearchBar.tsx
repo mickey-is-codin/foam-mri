@@ -20,11 +20,11 @@ const SearchBar = (props: SearchBarProps) => {
     if(event.keyCode === SPACEBAR_CODE) {
       setSearchDisplayed(true);
     }
-    if(event.keyCode === ESCAPE_CODE) {
+    if(setSearchDisplayed && (event.keyCode === ESCAPE_CODE)) {
       setSearchQuery('');
       setSearchDisplayed(false);
     }
-    if(event.keyCode === ENTER_CODE) {
+    if(setSearchDisplayed && (event.keyCode === ENTER_CODE)) {
       handleQuerySubmit(searchQuery);
     }
   }, [setSearchDisplayed, setSearchQuery, handleQuerySubmit, searchQuery]);
