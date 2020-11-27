@@ -5,4 +5,29 @@ export interface Color {
   b: number;
 };
 
-// Should use the same style above to create a type for the actual notesData
+export interface Note {
+  path: string;
+  links: string[];
+  content: string;
+};
+
+export interface NotesImport {
+  [key: string]: Note
+};
+
+export interface Node {
+  data: {
+    id: string,
+    searchHits: string[]
+  }
+};
+
+export interface Edge {
+  data: {
+    id: string;
+    source: string;
+    target: string;
+    sourceNode: Node;
+    targetNode: Node;
+  }
+};

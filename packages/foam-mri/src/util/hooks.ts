@@ -3,7 +3,6 @@ import cytoscape from 'cytoscape';
 import { toBaseGraphStyle } from '../styles/cytoscapeStyle';
 
 const renderCytoscape = (elements: any) => {
-  // console.log('elements: ', elements);
   const cytoscapeContainer = document.getElementById('cy');
   const cytoscapeLayout = {
     name: 'cose',
@@ -37,12 +36,11 @@ export const useCytoscape = (graphElements: any) => {
   });
 };
 
-export const useSpaceListener = (onSpacePress: any) => {
+export const useKeyListener = (onKeyPress: any) => {
   useEffect(() => {
-    document.addEventListener("keydown", onSpacePress, false);
-
+    document.addEventListener("keydown", onKeyPress, false);
     return () => {
-      document.removeEventListener("keydown", onSpacePress, false);
+      document.removeEventListener("keydown", onKeyPress, false);
     };
-  }, [onSpacePress]);
+  }, [onKeyPress]);
 };

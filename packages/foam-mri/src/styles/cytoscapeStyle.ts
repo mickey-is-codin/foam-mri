@@ -1,7 +1,8 @@
 import { toHeatmapColors } from './colors';
 import { clipTo, intMean, allButLast } from '../util/fp';
+import { BASE_NODE_COLOR, BASE_EDGE_COLOR, HEATMAP_RESOLUTION } from '../util/constants';
 
-// Uncomment for custom color interp heat map
+// Uncomment for custom heat map
 // import { Color } from '../util/types';
 // const startColor: Color = {
 //   r: 0,
@@ -14,9 +15,6 @@ import { clipTo, intMean, allButLast } from '../util/fp';
 //   b: 255,
 // };
 
-const BASE_NODE_COLOR = '#8b8b8b';
-const BASE_EDGE_COLOR = '#5d5d5d';
-const HEATMAP_RESOLUTION = 20;
 const toHeatmapRange = clipTo(HEATMAP_RESOLUTION);
 const heatmapColors = toHeatmapColors(HEATMAP_RESOLUTION);
 const nodeColors = [BASE_NODE_COLOR, ...heatmapColors];
@@ -39,30 +37,46 @@ const toEdgeColor = (edge: any) => {
   return edgeColors[clippedHits];
 };
 
-export const toBaseGraphStyle = () => {
-  return [
-    {
-      selector: 'node',
-      style: {
-        'background-color': toNodeBackgroundColor,
-        'label': 'data(id)',
-        'width': 10,
-        'height': 10,
-      }
-    },
-    {
-      selector: 'edge',
-      style: {
-        'width': 3,
-        'line-color': toEdgeColor,
-        'curve-style': 'bezier'
-      }
-    },
-    {
-      selector: 'label',
-      style: {
-        'color': '#ffffff',
-      }
-    }
-  ];
+const nodeStyle = {
+  selector: 'node',
+  style: {
+    'background-color': toNodeBackgroundColor,
+    'label': 'data(id)',
+    'width': 10,
+    'height': 10,
+  }
+};
+
+const edgeStyle = {
+  selector: 'edge',
+  style: {
+    'width': 3,
+    'line-color': toEdgeColor,
+    'curve-style': 'bezier'
+  }
+};
+
+const labelStyle = {
+  selector: 'label',
+  style: {
+    'color': '#ffffff',
+  }
+};
+
+export const toBaseGraphStyle = () => [ 
+  nodeStyle, 
+  edgeStyle, 
+  labelStyle,
+];
+
+export const cyStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: '100vh',
+  width: '100vw',
+  background: 'linear-gradient(210deg, rgba(5,30,48,1) 2%, rgba(0,0,0,1) 100%)',
+  zIndex: 0,
 };

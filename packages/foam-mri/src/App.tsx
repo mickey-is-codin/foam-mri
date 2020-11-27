@@ -5,6 +5,7 @@ import NotesGraph from './components/NotesGraph';
 import SearchBar from './components/SearchBar';
 
 const App = () => {
+
   return (
     <>
       <NotesGraph notesData={notesData} />
