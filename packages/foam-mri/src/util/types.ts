@@ -1,3 +1,5 @@
+import Fuse from 'fuse.js';
+
 export interface Color {
   [key: string]: number;
   r: number;
@@ -22,7 +24,7 @@ export interface NotesImport {
 export interface Node {
   data: {
     id: string,
-    searchHits: string[]
+    searchHits: Fuse.FuseResult<Note>[]
   }
 };
 
@@ -35,3 +37,9 @@ export interface Edge {
     targetNode: Node;
   }
 };
+
+export type PredFunc = (x: any) => boolean;
+export type ActionFunc = () => void;
+
+export type PredAction = [PredFunc, ActionFunc]
+export type PredActionList = PredAction[];

@@ -4,11 +4,11 @@ import notesData from './data/notesData.json';
 import NotesGraph from './components/NotesGraph';
 import SearchBar from './components/SearchBar';
 
-const App = () => {
+const App = (): JSX.Element => {
 
-  const [ finalSearchQuery, setFinalSearchQuery ] = useState('');
+  const [ finalSearchQuery, setFinalSearchQuery ] = useState<string>('');
 
-  const handleQuerySubmit = useCallback((query) => {
+  const handleQuerySubmit = useCallback((query): void => {
     setFinalSearchQuery(query);
   }, []);
 

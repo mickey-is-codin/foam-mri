@@ -1,6 +1,7 @@
+import Fuse from 'fuse.js';
 import { NotesImport, Note, Node } from './types';
 
-export const toNodes = (notesData: NotesImport, searchHits: any): Node[] => {
+export const toNodes = (notesData: NotesImport, searchHits: Fuse.FuseResult<Note>[]): Node[] => {
 
   const entries: [string, Note][] = Object.entries(notesData);
 

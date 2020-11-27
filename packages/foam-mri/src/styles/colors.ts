@@ -12,25 +12,27 @@ const YELLOW_RGB: Color = {
   b: 204,
 };
 
-const toHex = (x: number) => {
+const toHex = (x: number): string => {
   const xFloored = Math.floor(x);
   const hex = xFloored.toString(16);
   return hex.length === 1 ? `0${hex}` : hex;
 };
-const rgbToHex = (r: number, g: number, b: number) => {
+const rgbToHex = (r: number, g: number, b: number): string => {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`
 };
 
-const toInterpolate = (startColor: Color, endColor: Color) => (color: string, t: number): any => startColor[color] + (endColor[color] - startColor[color]) * t;
+const toInterpolate = (startColor: Color, endColor: Color) => (color: string, t: number): number => {
+  return startColor[color] + (endColor[color] - startColor[color]) * t;
+};
 
-export const toHeatmapColors = (resolution: number, startColor: Color = RED_RGB, endColor: Color = YELLOW_RGB) => {
+export const toHeatmapColors = (resolution: number, startColor: Color = RED_RGB, endColor: Color = YELLOW_RGB): string[] => {
   const deltaT = 1.0 / resolution;
-  const ts = Array.from({ length: resolution }, (_, ix) => deltaT * ix);
+  const ts: number[] = Array.from({ length: resolution }, (_, ix) => deltaT * ix);
   const interpolator = toInterpolate(startColor, endColor);
-  const heatmapColors = ts.map((t) => {
-    const r = interpolator('r', t);
-    const g = interpolator('g', t);
-    const b = interpolator('b', t);
+  const heatmapColors: string[] = ts.map((t) => {
+    const r: number = interpolator('r', t);
+    const g: number = interpolator('g', t);
+    const b: number = interpolator('b', t);
     return rgbToHex(r,g,b);
   });
   return heatmapColors;

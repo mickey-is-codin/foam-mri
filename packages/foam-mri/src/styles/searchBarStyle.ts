@@ -1,4 +1,4 @@
-export const searchBarBackgroundStyle = {
+export const searchBarBackgroundStyle: React.CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -10,7 +10,7 @@ export const searchBarBackgroundStyle = {
   zIndex: 1,
 };
 
-export const searchBarStyle = {
+export const searchBarStyle: React.CSSProperties = {
   position: 'absolute',
   top: '45%',
   height: '10%',

@@ -1,3 +1,4 @@
+import cytoscape from 'cytoscape';
 import { toHeatmapColors } from './colors';
 import { clipTo, intMean, allButLast } from '../util/fp';
 import { BASE_NODE_COLOR, BASE_EDGE_COLOR, HEATMAP_RESOLUTION } from '../util/constants';
@@ -15,12 +16,12 @@ import { BASE_NODE_COLOR, BASE_EDGE_COLOR, HEATMAP_RESOLUTION } from '../util/co
 //   b: 255,
 // };
 
+// TYPESSSSSS
+
 const toHeatmapRange = clipTo(HEATMAP_RESOLUTION);
 const heatmapColors = toHeatmapColors(HEATMAP_RESOLUTION);
 const nodeColors = [BASE_NODE_COLOR, ...heatmapColors];
 const edgeColors = [BASE_EDGE_COLOR, BASE_EDGE_COLOR, ...allButLast(heatmapColors)];
-
-// add conditional node size too
 
 const toNodeBackgroundColor = (node: any) => {
   const numSearchHits = node.data('searchHits').length;
@@ -44,7 +45,7 @@ const toEdgeColor = (edge: any) => {
   return edgeColors[clippedHits];
 };
 
-const nodeStyle = {
+const nodeStyle: cytoscape.StylesheetStyle = {
   selector: 'node',
   style: {
     'background-color': toNodeBackgroundColor,
@@ -54,7 +55,7 @@ const nodeStyle = {
   }
 };
 
-const edgeStyle = {
+const edgeStyle: cytoscape.StylesheetStyle = {
   selector: 'edge',
   style: {
     'width': 3,
@@ -63,20 +64,20 @@ const edgeStyle = {
   }
 };
 
-const labelStyle = {
+const labelStyle: cytoscape.StylesheetStyle = {
   selector: 'label',
   style: {
     'color': '#ffffff',
   }
 };
 
-export const toBaseGraphStyle = () => [ 
+export const toBaseGraphStyle = (): cytoscape.StylesheetStyle[] => [ 
   nodeStyle, 
   edgeStyle, 
   labelStyle,
 ];
 
-export const cyStyle = {
+export const cyStyle: React.CSSProperties = {
   position: 'absolute',
   top: 0,
   left: 0,
