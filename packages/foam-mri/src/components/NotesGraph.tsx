@@ -6,6 +6,7 @@ import { useCytoscape } from '../util/hooks';
 
 interface NotesGraphProps {
   notesData: NotesImport;
+  searchQuery: string;
 };
 
 const NotesGraph = (props: NotesGraphProps) => {

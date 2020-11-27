@@ -6,3 +6,4 @@ export const HEATMAP_RESOLUTION = 20;
 
 export const SPACEBAR_CODE = 32;
 export const ESCAPE_CODE = 27;
+export const ENTER_CODE = 13;
