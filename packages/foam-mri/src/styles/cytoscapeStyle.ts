@@ -20,10 +20,17 @@ const heatmapColors = toHeatmapColors(HEATMAP_RESOLUTION);
 const nodeColors = [BASE_NODE_COLOR, ...heatmapColors];
 const edgeColors = [BASE_EDGE_COLOR, BASE_EDGE_COLOR, ...allButLast(heatmapColors)];
 
+// add conditional node size too
+
 const toNodeBackgroundColor = (node: any) => {
   const numSearchHits = node.data('searchHits').length;
   const clippedHits = toHeatmapRange(numSearchHits);
   return nodeColors[clippedHits];
+};
+
+const toNodeSize = (node: any) => {
+  const numSearchHits = node.data('searchHits').length;
+  return numSearchHits === 0 ? 10 : (numSearchHits + 1) * 20;
 };
 
 const toEdgeColor = (edge: any) => {
@@ -42,8 +49,8 @@ const nodeStyle = {
   style: {
     'background-color': toNodeBackgroundColor,
     'label': 'data(id)',
-    'width': 10,
-    'height': 10,
+    'width': toNodeSize,
+    'height': toNodeSize,
   }
 };
 

@@ -1,15 +1,16 @@
 import { NotesImport, Note, Node } from './types';
 
-export const toNodes = (notesData: NotesImport): Node[] => {
+export const toNodes = (notesData: NotesImport, searchHits: any): Node[] => {
 
   const entries: [string, Note][] = Object.entries(notesData);
 
-  return entries.reduce((nodes: Node[], [notePath]: [string, Note]) => {
+  return entries.reduce((nodes: Node[], [notePath, { path: shortenedPath }]: [string, Note]) => {
+    const hits = searchHits.filter(({ item: { path } }: any) => path === shortenedPath);
     const [id]: string[] = notePath.split('.');
     const newNode: Node = {
       data: {
         id,
-        searchHits: []
+        searchHits: hits
       }
     };
     return [...nodes, newNode];

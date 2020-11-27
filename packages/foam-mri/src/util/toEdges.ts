@@ -3,7 +3,7 @@
 
 import { NotesImport, Note, Edge } from './types';
 
-export const toEdges = (notesData: NotesImport, nodes: any) => {
+export const toEdges = (notesData: NotesImport, searchHits: any, nodes: any) => {
   
   const entries: [string, Note][] = Object.entries(notesData);
 

@@ -12,8 +12,6 @@ const App = () => {
     setFinalSearchQuery(query);
   }, []);
 
-  console.log('finalSearchQuery: ', finalSearchQuery);
-
   return (
     <>
       <NotesGraph notesData={notesData} searchQuery={finalSearchQuery} />

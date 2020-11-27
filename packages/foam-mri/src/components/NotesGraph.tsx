@@ -11,9 +11,7 @@ interface NotesGraphProps {
 
 const NotesGraph = (props: NotesGraphProps) => {
 
-  const { notesData } = props;
-
-  const graphElements = toGraphElements(notesData);
+  const graphElements = toGraphElements(props);
 
   useCytoscape(graphElements);
 
