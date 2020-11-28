@@ -25,13 +25,22 @@ const edgeColors = [BASE_EDGE_COLOR, BASE_EDGE_COLOR, ...allButLast(heatmapColor
 
 const toNodeBackgroundColor = (node: any) => {
   const numSearchHits = node.data('searchHits').length;
+  // if (numSearchHits > 1) {
+  //   console.log(`${node.data('id')}: ${numSearchHits}`);
+  // }
   const clippedHits = toHeatmapRange(numSearchHits);
   return nodeColors[clippedHits];
 };
 
 const toNodeSize = (node: any) => {
   const numSearchHits = node.data('searchHits').length;
-  return numSearchHits === 0 ? 10 : (numSearchHits + 1) * 20;
+  return numSearchHits === 0 ? 8 : (numSearchHits + 1) * 8;
+};
+
+const toNodeLabel = (node: any) => {
+  const id = node.data('id');
+  const numSearchHits = node.data('searchHits').length;
+  return numSearchHits === 0 ? '' : id;
 };
 
 const toEdgeColor = (edge: any) => {
@@ -49,16 +58,27 @@ const nodeStyle: cytoscape.StylesheetStyle = {
   selector: 'node',
   style: {
     'background-color': toNodeBackgroundColor,
-    'label': 'data(id)',
+    // 'label': 'data(id)',
+    'label': toNodeLabel,
     'width': toNodeSize,
     'height': toNodeSize,
+  }
+};
+
+const nodeHoverStyle: cytoscape.StylesheetStyle = {
+  selector: 'node.hover',
+  style: {
+    'background-color': toNodeBackgroundColor,
+    'label': 'data(id)',
+    'width': 50,
+    'height': 50,
   }
 };
 
 const edgeStyle: cytoscape.StylesheetStyle = {
   selector: 'edge',
   style: {
-    'width': 3,
+    'width': 2,
     'line-color': toEdgeColor,
     'curve-style': 'bezier'
   }
@@ -72,7 +92,8 @@ const labelStyle: cytoscape.StylesheetStyle = {
 };
 
 export const toBaseGraphStyle = (): cytoscape.StylesheetStyle[] => [ 
-  nodeStyle, 
+  nodeStyle,
+  nodeHoverStyle,
   edgeStyle, 
   labelStyle,
 ];

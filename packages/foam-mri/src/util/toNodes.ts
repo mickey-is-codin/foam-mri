@@ -5,13 +5,14 @@ export const toNodes = (notesData: NotesImport, searchHits: Fuse.FuseResult<Note
 
   const entries: [string, Note][] = Object.entries(notesData);
 
-  return entries.reduce((nodes: Node[], [notePath, { path: shortenedPath }]: [string, Note]) => {
-    const hits = searchHits.filter(({ item: { path } }: any) => path === shortenedPath);
+  return entries.reduce((nodes: Node[], [notePath, { path: shortenedPath, content, links }]: [string, Note]) => {
+    const { matches = [] } = searchHits.find(({ item: { path } }: any) => path === shortenedPath) || {};
+
     const [id]: string[] = notePath.split('.');
     const newNode: Node = {
       data: {
         id,
-        searchHits: hits
+        searchHits: matches
       }
     };
     return [...nodes, newNode];

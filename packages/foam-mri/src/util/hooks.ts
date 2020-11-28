@@ -25,12 +25,23 @@ export const useCytoscape = (elements: (Node | Edge)[]): void => {
       coolingFactor: 0.95,
       minTemp: 1.0
     };
-    cytoscape({
+
+    const cy = cytoscape({
       container: cytoscapeContainer,
       elements,
       style: toBaseGraphStyle(),
       layout: cytoscapeLayout
     });
+
+    cy.on('mouseover', 'node', (event) => {
+      const node = event.target;
+      node.addClass('hover');
+    });
+    cy.on('mouseout', 'node', (event) => {
+      const node = event.target;
+      node.removeClass('hover');
+    });
+    // selected
   });
 };
 

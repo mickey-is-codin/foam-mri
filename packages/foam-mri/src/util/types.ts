@@ -24,7 +24,7 @@ export interface NotesImport {
 export interface Node {
   data: {
     id: string,
-    searchHits: Fuse.FuseResult<Note>[]
+    searchHits: readonly Fuse.FuseResultMatch[]
   }
 };
 
