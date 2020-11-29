@@ -8,9 +8,14 @@ const searchOptions: Fuse.IFuseOptions<Note> = {
 };
 
 // If we refactor notes to export as string array we remove need for this
-const toSearchableArray = (notesData: NotesImport): Note[] => {
+const toSearchableArray = (
+  notesData: NotesImport
+): Note[] => {
   const notes: Note[] = Object.values(notesData);
-  const searchFields: Note[] = notes.reduce((searchArray: Note[], note: Note): Note[] => {
+  const searchFields: Note[] = notes.reduce((
+    searchArray: Note[], 
+    note: Note
+  ): Note[] => {
     const { content } = note;
     if (Array.isArray(content)) return [...searchArray, note];
     const newNote: Note = {
@@ -22,8 +27,10 @@ const toSearchableArray = (notesData: NotesImport): Note[] => {
   return searchFields;
 };
 
-export const toSearch = (query: string) => (notesData: NotesImport): Fuse.FuseResult<Note>[] => {
-  const searchFields: Note[] = toSearchableArray(notesData);
-  const fuse: Fuse<Note> = new Fuse(searchFields, searchOptions);
-  return fuse.search(query);
+export const toSearch = (query: string) => {
+  return (notesData: NotesImport): Fuse.FuseResult<Note>[] => {
+    const searchFields: Note[] = toSearchableArray(notesData);
+    const fuse: Fuse<Note> = new Fuse(searchFields, searchOptions);
+    return fuse.search(query);
+  };
 };

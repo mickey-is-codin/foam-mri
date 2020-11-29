@@ -1,14 +1,13 @@
-// Similar to nodes, we want to conditionally style based on search hits
-// If the source and target of an edge both contain >= 1 hit then style
-
 import { toNodeId } from './fp';
 import { NotesImport, Note, Node, Edge } from './types';
 import { DEFAULT_NODE } from './constants';
 
-const toNodeFinder = (nodes: Node[]) => (currentId: string): Node => {
-  return nodes.find(({data: { id }} : Node) => {
-    return id === currentId;
-  }) || DEFAULT_NODE;
+const toNodeFinder = (nodes: Node[]) => {
+  return (currentId: string): Node => {
+    return nodes.find(({data: { id }} : Node) => {
+      return id === currentId;
+    }) || DEFAULT_NODE;
+  };
 };
 
 const toNewEdge = (
@@ -26,20 +25,31 @@ const toNewEdge = (
   }
 });
 
-export const toEdges = (notesData: NotesImport, nodes: Node[]) => {
-  
+export const toEdges = (
+  notesData: NotesImport, 
+  nodes: Node[]
+): Edge[] => {
   const entries: [string, Note][] = Object.entries(notesData);
-
   const nodeFinder = toNodeFinder(nodes);
 
-  const toEdgesFromLinks = (fromId: string, links: string[], sourceNode: Node) => {
-    return links.reduce((newEdges: Edge[], toId: string) => {
+  const toEdgesFromLinks = (
+    fromId: string, 
+    links: string[], 
+    sourceNode: Node
+  ) => {
+    return links.reduce((
+      newEdges: Edge[], 
+      toId: string
+    ): Edge[] => {
       const targetNode: Node = nodeFinder(toId);
       return [...newEdges, toNewEdge(fromId, toId, sourceNode, targetNode)];
     }, []);
   };
 
-  return entries.reduce((edges: Edge[], [notePath, { links }]: [string, Note]): Edge[] => {
+  return entries.reduce((
+    edges: Edge[], 
+    [notePath, { links }]: [string, Note]
+  ): Edge[] => {
     const fromId = toNodeId(notePath);
     const sourceNode: Node = nodeFinder(fromId);
     const newEdges = toEdgesFromLinks(fromId, links, sourceNode);

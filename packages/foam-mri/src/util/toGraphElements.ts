@@ -9,7 +9,9 @@ interface GraphElementsArgs {
   searchQuery: string;
 };
 
-export const toGraphElements = (args: GraphElementsArgs) : (Node | Edge)[] => {
+export const toGraphElements = (
+  args: GraphElementsArgs
+): (Node | Edge)[] => {
   
   const { notesData, searchQuery } = args;
 
