@@ -27,3 +27,8 @@ A tool for exporting a foam networked notebook to JSON.
 
 # Foam MRI
 A tool for searching your foam notebook and discovering hidden connections between notes.
+
+![Foam MRI Example Blank](./img/graph_startup.png)
+![Foam MRI Search](./img/search.png)
+![Foam MRI Graph Results](./img/graph_with_results.png)
+![Foam MRI Sidebar](./img/graph_with_sidebar.png)
