@@ -38,7 +38,7 @@ const toNodeBackgroundColor = (node: cytoscape.NodeSingular): string => {
 const toNodeSize = (node: cytoscape.NodeSingular): number => {
   const numSearchHits: number = node.data('searchHits').length;
   const clippedHits: number = toHeatmapRange(numSearchHits);
-  return numSearchHits ? (clippedHits + 1) * 8 : 8;
+  return numSearchHits ? (clippedHits + 1) * 5 : 8;
 };
 
 const toNodeLabel = (node: cytoscape.NodeSingular): string => {
@@ -51,7 +51,6 @@ const toEdgeColor = (edge: cytoscape.EdgeSingular): string => {
   const numSourceSearchHits: number = edge.data('sourceNode').data.searchHits.length;
   const numTargetSearchHits: number = edge.data('targetNode').data.searchHits.length;
   const meanHits = min(numSourceSearchHits, numTargetSearchHits);
-  // const meanHits: number = ((numSourceSearchHits > 0) && (numTargetSearchHits > 0)) ? intMean(numSourceSearchHits, numTargetSearchHits) : 0;
   const clippedHits: number = toHeatmapRange(meanHits);
   return edgeColors[clippedHits];
 };
@@ -60,7 +59,6 @@ const toEdgeWidth = (edge: cytoscape.EdgeSingular): number => {
   const numSourceSearchHits: number = edge.data('sourceNode').data.searchHits.length;
   const numTargetSearchHits: number = edge.data('targetNode').data.searchHits.length;
   const meanHits = min(numSourceSearchHits, numTargetSearchHits) + 2;
-  // const meanHits: number = ((numSourceSearchHits > 0) && (numTargetSearchHits > 0)) ? intMean(numSourceSearchHits, numTargetSearchHits) : 0;
   const clippedHits: number = toEdgeRange(meanHits);
   return meanHits ? clippedHits : 2;
 }; 
