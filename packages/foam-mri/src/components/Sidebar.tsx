@@ -36,11 +36,10 @@ const Sidebar = (props: SidebarProps): JSX.Element | null => {
   return (
     <>
       <div style={sidebarStyle}>
-        Note
         <button
           onClick={() => updateSidebarNote(undefined)}
         >
-          Close
+          X
         </button>
         <NoteContent sidebarNote={sidebarNote} />
       </div>

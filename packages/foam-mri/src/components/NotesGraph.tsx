@@ -17,4 +17,4 @@ const NotesGraph = (props: NotesGraphProps): JSX.Element => {
   return <div style={cyStyle} id="cy"></div>;
 };
 
-export default NotesGraph;
+export default React.memo(NotesGraph);

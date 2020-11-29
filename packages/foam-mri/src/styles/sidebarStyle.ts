@@ -11,12 +11,14 @@ export const sidebarBackgroundStyle: React.CSSProperties = {
 };
 
 export const sidebarStyle: React.CSSProperties = {
-  backgroundColor: '#ffffff',
+  backgroundColor: '#000000aa',
+  color: '#e8e3c1',
   position: 'absolute',
   top: '0',
   right: '0', 
   height: '100%',
   width: '30%',
-  color: '#000000',
   fontSize: '12px',
+  overflow: 'auto',
+  zIndex: 2,
 };
