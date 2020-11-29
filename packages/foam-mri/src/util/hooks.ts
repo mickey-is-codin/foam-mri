@@ -4,7 +4,7 @@ import { PredFunc, ActionFunc, PredActionList, Node, Edge, PredAction } from './
 import { toTrue, noop, second } from '../util/fp';
 import { toBaseGraphStyle } from '../styles/cytoscapeStyle';
 
-export const useCytoscape = (elements: (Node | Edge)[]): void => {
+export const useCytoscape = (elements: (Node | Edge)[], updateSidebarNote: any): void => {
   useEffect(() => {
     const cytoscapeContainer = document.getElementById('cy');
     const cytoscapeLayout = {
@@ -41,7 +41,10 @@ export const useCytoscape = (elements: (Node | Edge)[]): void => {
       const node = event.target;
       node.removeClass('hover');
     });
-    // selected
+    cy.on('click', 'node', (event) => {
+      const node = event.target;
+      updateSidebarNote(node);
+    });
   });
 };
 

@@ -7,11 +7,13 @@ import { useCytoscape } from '../util/hooks';
 interface NotesGraphProps {
   notesData: NotesImport;
   searchQuery: string;
+  updateSidebarNote: any;
 };
 
 const NotesGraph = (props: NotesGraphProps): JSX.Element => {
   const graphElements: (Node | Edge)[] = toGraphElements(props);
-  useCytoscape(graphElements);
+  const { updateSidebarNote } = props;
+  useCytoscape(graphElements, updateSidebarNote);
   return <div style={cyStyle} id="cy"></div>;
 };
 
