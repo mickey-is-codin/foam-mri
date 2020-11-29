@@ -1,10 +1,15 @@
 import cytoscape from 'cytoscape';
 import { toHeatmapColors } from './colors';
-import { clipTo, intMean, allButLast } from '../util/fp';
-import { BASE_NODE_COLOR, BASE_EDGE_COLOR, HEATMAP_RESOLUTION } from '../util/constants';
+import { ToNumber } from '../util/types';
+import { clipTo, min } from '../util/fp';
+import { 
+  BASE_NODE_COLOR, 
+  BASE_EDGE_COLOR, 
+  HEATMAP_RESOLUTION, 
+  MAX_EDGE_WIDTH 
+} from '../util/constants';
 
 // Uncomment for custom heat map
-// import { Color } from '../util/types';
 // const startColor: Color = {
 //   r: 0,
 //   g: 255,
@@ -16,45 +21,51 @@ import { BASE_NODE_COLOR, BASE_EDGE_COLOR, HEATMAP_RESOLUTION } from '../util/co
 //   b: 255,
 // };
 
-// TYPESSSSSS
+const toHeatmapRange: ToNumber = clipTo(HEATMAP_RESOLUTION);
+const toEdgeRange: ToNumber = clipTo(MAX_EDGE_WIDTH);
+const heatmapColors: string[] = toHeatmapColors(HEATMAP_RESOLUTION);
+const nodeColors: string[] = [BASE_NODE_COLOR, ...heatmapColors];
+const edgeColors: string[] = [BASE_EDGE_COLOR, ...heatmapColors];
+// If offset between edge and node colors desired:
+// const edgeColors: string[] = [BASE_EDGE_COLOR, BASE_EDGE_COLOR, ...allButLast(heatmapColors)];
 
-const toHeatmapRange = clipTo(HEATMAP_RESOLUTION);
-const heatmapColors = toHeatmapColors(HEATMAP_RESOLUTION);
-const nodeColors = [BASE_NODE_COLOR, ...heatmapColors];
-const edgeColors = [BASE_EDGE_COLOR, BASE_EDGE_COLOR, ...allButLast(heatmapColors)];
-
-const toNodeBackgroundColor = (node: any) => {
-  const numSearchHits = node.data('searchHits').length;
-  // if (numSearchHits > 1) {
-  //   console.log(`${node.data('id')}: ${numSearchHits}`);
-  // }
-  const clippedHits = toHeatmapRange(numSearchHits);
+const toNodeBackgroundColor = (node: cytoscape.NodeSingular): string => {
+  const numSearchHits: number = node.data('searchHits').length;
+  const clippedHits: number = toHeatmapRange(numSearchHits);
   return nodeColors[clippedHits];
 };
 
-const toNodeSize = (node: any) => {
-  const numSearchHits = node.data('searchHits').length;
-  return numSearchHits === 0 ? 8 : (numSearchHits + 1) * 8;
+const toNodeSize = (node: cytoscape.NodeSingular): number => {
+  const numSearchHits: number = node.data('searchHits').length;
+  const clippedHits: number = toHeatmapRange(numSearchHits);
+  return numSearchHits ? (clippedHits + 1) * 8 : 8;
 };
 
-const toNodeLabel = (node: any) => {
-  const id = node.data('id');
-  const numSearchHits = node.data('searchHits').length;
-  return numSearchHits === 0 ? '' : id;
+const toNodeLabel = (node: cytoscape.NodeSingular): string => {
+  const id: string = node.data('id');
+  const numSearchHits: number = node.data('searchHits').length;
+  return numSearchHits ? id : '';
 };
 
-const toEdgeColor = (edge: any) => {
-  const numSourceSearchHits = edge._private.data.sourceNode.data.searchHits.length;
-  const numTargetSearchHits = edge._private.data.targetNode.data.searchHits.length;
-  if (!(numSourceSearchHits && numTargetSearchHits)) {
-    return BASE_EDGE_COLOR;
-  }
-  const meanHits = intMean(numSourceSearchHits, numTargetSearchHits);
-  const clippedHits = toHeatmapRange(meanHits);
+const toEdgeColor = (edge: cytoscape.EdgeSingular): string => {
+  const numSourceSearchHits: number = edge.data('sourceNode').data.searchHits.length;
+  const numTargetSearchHits: number = edge.data('targetNode').data.searchHits.length;
+  const meanHits = min(numSourceSearchHits, numTargetSearchHits);
+  // const meanHits: number = ((numSourceSearchHits > 0) && (numTargetSearchHits > 0)) ? intMean(numSourceSearchHits, numTargetSearchHits) : 0;
+  const clippedHits: number = toHeatmapRange(meanHits);
   return edgeColors[clippedHits];
 };
 
-const nodeStyle: cytoscape.StylesheetStyle = {
+const toEdgeWidth = (edge: cytoscape.EdgeSingular): number => {
+  const numSourceSearchHits: number = edge.data('sourceNode').data.searchHits.length;
+  const numTargetSearchHits: number = edge.data('targetNode').data.searchHits.length;
+  const meanHits = min(numSourceSearchHits, numTargetSearchHits) + 2;
+  // const meanHits: number = ((numSourceSearchHits > 0) && (numTargetSearchHits > 0)) ? intMean(numSourceSearchHits, numTargetSearchHits) : 0;
+  const clippedHits: number = toEdgeRange(meanHits);
+  return meanHits ? clippedHits : 2;
+}; 
+
+const nodeStyle: cytoscape.Stylesheet = {
   selector: 'node',
   style: {
     'background-color': toNodeBackgroundColor,
@@ -78,7 +89,7 @@ const nodeHoverStyle: cytoscape.StylesheetStyle = {
 const edgeStyle: cytoscape.StylesheetStyle = {
   selector: 'edge',
   style: {
-    'width': 2,
+    'width': toEdgeWidth,
     'line-color': toEdgeColor,
     'curve-style': 'bezier'
   }

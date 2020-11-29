@@ -38,6 +38,8 @@ export interface Edge {
   }
 };
 
+export type ToString = (x: any) => string;
+export type ToNumber = (x: any) => number;
 export type PredFunc = (x: any) => boolean;
 export type ActionFunc = () => void;
 

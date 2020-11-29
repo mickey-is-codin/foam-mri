@@ -12,6 +12,7 @@ const App = (): JSX.Element => {
   // Necessary to use filePath key and value?
   // Would remove a lot of Object.entries() headache
   // Maybe make a graphUtil file for non-fp utils?
+  // Also need to clip max node size to heatmap range
 
   const [ finalSearchQuery, setFinalSearchQuery ] = useState<string>('');
 
