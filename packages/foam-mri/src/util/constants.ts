@@ -20,3 +20,22 @@ export const KEYCODES: KeyCodesMap = {
   ESCAPE: ESCAPE_CODE,
   ENTER: ENTER_CODE,
 };
+
+export const DEFAULT_NOTE = {
+  path: '',
+  links: [],
+  content: '',
+};
+
+export const DEFAULT_NOTE_SEARCH_HIT = {
+  item: DEFAULT_NOTE,
+  refIndex: 0,
+  matches: []
+};
+
+export const DEFAULT_NODE = {
+  data: {
+    id: '',
+    searchHits: []
+  }
+};

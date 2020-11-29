@@ -1,26 +1,29 @@
 import Fuse from 'fuse.js';
 import { NotesImport, Note } from './types';
 
-export const toSearch = (query: string) => (notesData: NotesImport): Fuse.FuseResult<Note>[] => {
-  // const searchFields: Note[] = Object.values(notesData);
-  const values = Object.values(notesData);
-  const searchFields: any = values.reduce((acc, val: any): any => {
-    return [...acc, {
-      ...val,
-      path: val.path,
-      links: val.links,
-      content: val.content.split('\n')
-    }];
+const searchOptions: Fuse.IFuseOptions<Note> = {
+  keys: ['content'],
+  includeScore: true,
+  includeMatches: true,
+};
+
+// If we refactor notes to export as string array we remove need for this
+const toSearchableArray = (notesData: NotesImport): Note[] => {
+  const notes: Note[] = Object.values(notesData);
+  const searchFields: Note[] = notes.reduce((searchArray: Note[], note: Note): Note[] => {
+    const { content } = note;
+    if (Array.isArray(content)) return [...searchArray, note];
+    const newNote: Note = {
+      ...note,
+      content: content.split('\n')
+    };
+    return [...searchArray, newNote];
   }, []);
-  console.log('searchFields: ', searchFields);
-  const options: Fuse.IFuseOptions<Note> = {
-    keys: ['content'],
-    includeScore: true,
-    includeMatches: true,
-    // findAllMatches: true,
-  };
-  const fuse: Fuse<Note> = new Fuse(searchFields, options);
-  const results: Fuse.FuseResult<Note>[] = fuse.search(query);
-  console.log('search results: ', results);
-  return results;
+  return searchFields;
+};
+
+export const toSearch = (query: string) => (notesData: NotesImport): Fuse.FuseResult<Note>[] => {
+  const searchFields: Note[] = toSearchableArray(notesData);
+  const fuse: Fuse<Note> = new Fuse(searchFields, searchOptions);
+  return fuse.search(query);
 };

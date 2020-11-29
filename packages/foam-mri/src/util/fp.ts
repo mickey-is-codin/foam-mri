@@ -9,4 +9,7 @@ export const allButLast = (xs: any[]) => xs.slice(0,-1);
 
 export const toTrue = (x?: any): boolean => true;
 export const noop = (x?: any): void => {};
+export const first = ([x, ...rest]: any) => x;
 export const second = ([x, y]: any[]) => y;
+
+export const toNodeId = (filePath: string): string => first(filePath.split('.'));

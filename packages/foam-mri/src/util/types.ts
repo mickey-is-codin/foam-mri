@@ -14,7 +14,7 @@ export interface KeyCodesMap {
 export interface Note {
   path: string;
   links: string[];
-  content: string;
+  content: string | string[];
 };
 
 export interface NotesImport {

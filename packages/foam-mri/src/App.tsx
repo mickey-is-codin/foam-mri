@@ -6,6 +6,13 @@ import SearchBar from './components/SearchBar';
 
 const App = (): JSX.Element => {
 
+  // Next feature: Conditional sidebar on node select
+  // Big refactor around exporting note contents as array of strings
+  // Also refactor export to not use full path names
+  // Necessary to use filePath key and value?
+  // Would remove a lot of Object.entries() headache
+  // Maybe make a graphUtil file for non-fp utils?
+
   const [ finalSearchQuery, setFinalSearchQuery ] = useState<string>('');
 
   const handleQuerySubmit = useCallback((query): void => {
